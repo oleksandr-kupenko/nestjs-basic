@@ -1,5 +1,4 @@
 import { AfterInsert, BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { Exclude } from 'class-transformer';
 
 @Entity()
 export class User {
@@ -10,7 +9,6 @@ export class User {
   email: string;
 
   @Column()
-  @Exclude()// need to skip the password (with @UseInterceptors in controller)
   password: string;
 
   @BeforeInsert()

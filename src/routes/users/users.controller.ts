@@ -11,11 +11,9 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
-import { Repository } from 'typeorm';
-import { User } from './user.entity';
-import { InjectRepository } from '@nestjs/typeorm';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { SerializeInterceptor } from '../../interceptors/serialize.interceptor';
 
 @Controller('auth')
 export class UsersController {
@@ -28,9 +26,10 @@ export class UsersController {
     return  this.userService.create(body.email, body.password);
   }
 
-  @UseInterceptors(ClassSerializerInterceptor) // need to skip the password
+  @UseInterceptors(SerializeInterceptor) // need to skip the password
   @Get('/:id')
   findUser(@Param('id') id: string) {
+    console.log('2 handler is running')
     return this.userService.findOne(Number(id));
   }
 
