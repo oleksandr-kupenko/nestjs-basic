@@ -13,7 +13,6 @@ export class User {
 
   @BeforeInsert()
   logInsert() {
-    this.email = 'new@ukr.net'
     console.log('AFTER EMAIL', this.email);
   }
 }
