@@ -6,8 +6,7 @@ import {
   Param,
   Patch,
   Post,
-  Query,
-  UseInterceptors,
+  Query, Session, UseGuards,
 } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
@@ -15,6 +14,9 @@ import { UpdateUserDto } from './dtos/update-user.dto';
 import { Serialize, SerializeInterceptor } from '../../interceptors/serialize.interceptor';
 import { UserDto } from './dtos/user.dto';
 import { AuthService } from './auth.service';
+import { CurrentUser } from './decorators/current-user.decorator';
+import { User } from './user.entity';
+import { AuthGuard } from '../../guard/auth.guard';
 
 @Controller('auth')
 @Serialize(UserDto)
@@ -24,14 +26,42 @@ export class UsersController {
               private authService: AuthService) {
   }
 
+  //### example session working
+  // @Get('/colors/:color')
+  // setColor(@Param('color') color: string, @Session() session: any) {
+  //   console.log(1111, color);
+  //   session.color = color;
+  // }
+  //
+  // @Get('/colors')
+  // getColor(@Session() session: any) {
+  //   console.log(222, session)
+  //   return session.color;
+  // }
+
+  @UseGuards(AuthGuard)
+  @Get('/whoami')
+  whoAmI(@CurrentUser() user: User) {
+    return user;
+  }
+
+  @Post('/signout')
+  signOut(@Session() session: any) {
+    session.userId = null;
+  }
+
   @Post('/signup')
-  createUser(@Body() body: CreateUserDto) {
-    return  this.authService.signUp(body.email, body.password);
+  async createUser(@Body() body: CreateUserDto, @Session() session: any) {
+    const user = await  this.authService.signUp(body.email, body.password);
+    session.userId = user.id;
+    return user;
   }
 
   @Post('/signin')
-  signIn(@Body() body: CreateUserDto) {
-    return this.authService.signIn(body.email, body.password);
+  async signIn(@Body() body: CreateUserDto, @Session() session: any) {
+    const user = await this.authService.signIn(body.email, body.password);
+    session.userId = user.id;
+    return user;
   }
 
   @Get('/:id')
