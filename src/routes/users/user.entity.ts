@@ -12,7 +12,5 @@ export class User {
   password: string;
 
   @BeforeInsert()
-  logInsert() {
-    console.log('AFTER EMAIL', this.email);
-  }
+  logInsert() {}
 }
