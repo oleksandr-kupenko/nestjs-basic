@@ -70,7 +70,7 @@ export class UsersController {
   }
 
   @Get()
-  findAllUsers(@Query('email') email: string) {
+  findUserByEmail(@Query('email') email: string) {
     return this.userService.find(email);
   }
 

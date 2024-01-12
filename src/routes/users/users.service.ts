@@ -24,6 +24,8 @@ export class UsersService {
     return this.repo.findBy({ email: email });
   }
   findAmongUsers(email: string) {
+
+
     return this.repo.findBy({
       email: Like(`%${email}%`),
     });
