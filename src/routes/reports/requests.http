@@ -1,0 +1,21 @@
+### Create a new report
+POST http://localhost:3000/reports
+content-type: application/json
+
+{
+  "make": "Ford",
+  "model": "Focus",
+  "year": 2016,
+  "mileage": 48000,
+  "lng": 0,
+  "lat": 0,
+  "price": 8500
+}
+
+### Approve an existing report
+PATCH http://localhost:3000/reports/4
+content-type: application/json
+
+{
+  "approved": true
+}

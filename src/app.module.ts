@@ -8,15 +8,17 @@ import { UsersModule } from './routes/users/users.module';
 import { APP_PIPE } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as process from 'process';
+import { ReportsModule } from './routes/reports/reports.module';
 const cookieSession = require('cookie-session');
 
 @Module({
   imports: [
+    UsersModule,
+    ReportsModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`
     }),
-    UsersModule,
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
