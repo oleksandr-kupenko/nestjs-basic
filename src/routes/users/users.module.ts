@@ -14,7 +14,7 @@ import { CurrentUserMiddleware } from './middlewares/current-user.middleware';
     // {
     //   provide: APP_INTERCEPTOR,
     //   useClass: CurrentUserInterceptor
-    // }  ### Can be deleted. Replaced with middleware (below) so that it runs after cookies session middleware
+    // }  ### Deleted. Replaced with middleware (below) so that it runs after cookies session middleware
     ]
 })
 export class UsersModule {
