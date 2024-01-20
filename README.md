@@ -15,9 +15,13 @@ The administrator can approve them. A get query with filtering returns the avera
 - Environment settings: different databased for tests and development
 - Ormconfig for different environments
 - Working unit and e2e test examples (only for users)
+- Swagger (schemas work correctly after npm run build): [URL]/api#/ 
 
 ## Commands
 ```bash
+  #run migration
+  npm run typeorm migration:run
+
  #run dev
  npm run start:dev
 
@@ -29,8 +33,4 @@ The administrator can approve them. A get query with filtering returns the avera
   
   #create migration
   npm run typeorm migration:generate -n migrations/[migration name] -- -o
-  
-  #run migration
-  npm run typeorm migration:run
-
 ```
